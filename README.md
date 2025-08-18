@@ -1,5 +1,8 @@
-# 🏦Sistema bancário (Parte 1)
-## ⚙️Projeto desenvolvido por mim, Wever33
-### 💯Este projeto se trata de uma primeira versão de um sistema bancário, contendo as funcionalidades saque, depósito e extrato.
+# 🏦Sistema bancário (⚙️)
 
-#### 🔎 Mais versões viram 
+## 📚Projeto sendo desenvolvido por Weverton Santos, iniciante na área de Back-End com Python 
+
+### 🔎 Últimas modificações:
+#### Modularizando o sistema, transformando em funções as atividades de sacar, depositar e pedir extrato. Modificações futuras em andamento ⏳....
+
+
