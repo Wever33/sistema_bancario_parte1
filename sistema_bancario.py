@@ -15,14 +15,20 @@ VALOR_LIMITE_DE_SAQUE = float(500)
 extrato_saque = "" # Variável para receber os saques 
 extrato_deposito = "" # Variável para receber os depósitos
 
-while True: # Estrutura de repetição while = True. Com o objetivo de ficar sempre em Loop3
-    print(menu)
-    opcao = input("") # Exibindo a mensagem do menu e pegando a opção pelo input, atribuindo na variável opcao
+def deposito(saldo, depositar, extrato_deposito, /):
+    if depositar > 0: # Condição para o depósito ser um número maior que 0
+            print("Depósito realizado!")
+            saldo += depositar #Atribuindo o depósito no saldo, após a confirmação que o valor do depósito é maior que zero e não menor
+            #print(saldo)
+            extrato_deposito += f"Depósito: + R$ {depositar:.2f}\n"
+            # Acima, estou atribuindo a variável extrato com o saldo e o ultmo valor que depositei
 
-    if opcao == "s": # Condição para a opção de saque
-        saque = float(input("Informe o saque: R$ ")) # Após a checagem, pede o informe do saque
+    else: # Condição para caso o cliente digite valores negativos para depósito
+            print("Você digitou valores negativos, tente novamente")
+    return saldo, extrato_deposito
 
-        if saque >= 0: 
+def sacar(*, saque, saldo, limite_saque, VALOR_LIMITE_DE_SAQUE, extrato_saque):
+     if saque >= 0: 
             if saque <= VALOR_LIMITE_DE_SAQUE and saldo >= saque and limite_saque != 3: # Condição para verificar se o limite de saque foi atingido, tem que ser diferente de 3: #Verificando se o valor do saque é até 500 e o saldo da conta tem que ser maior > saque
                 print("Saque realizado!")
                 saldo -= saque # Após a confirmação da condição, iremos fazer a subtração do saldo com o saque
@@ -35,28 +41,15 @@ while True: # Estrutura de repetição while = True. Com o objetivo de ficar sem
             elif saque > VALOR_LIMITE_DE_SAQUE: # Condicional para caso ele ultrapasse o valor limite de saque
                     print(f"Ops, o limite de saque é R${VALOR_LIMITE_DE_SAQUE: .2f}") 
             else:
-                print(f" Quantidade de saques diários atingido = {limite_saque}")     
+                print(f"Quantidade de saques diários atingido = {limite_saque}")     
 
-        else:
-            print(f"Error, você está tentando sacar valores negativos!") # Caso ele atinga o limite de saque diário
+     else:
+         print(f"Error, você está tentando sacar valores negativos!") # Caso ele atinga o limite de saque diário
 
+     return saldo, extrato_saque, limite_saque
 
-    elif opcao == "d": # Condição para a opção de depósito que é 1 
-        depositar = float(input("Informe o depósito: R$ ")) # Atribuindo o valor de depósito na variável depositar
-
-        if depositar > 0: # Condição para o depósito ser um número maior que 0
-            print("Depósito realizado!")
-            saldo += depositar #Atribuindo o depósito no saldo, após a confirmação que o valor do depósito é maior que zero e não menor
-            #print(saldo)
-            extrato_deposito += f"Depósito: + R$ {depositar:.2f}\n"
-            # Acima, estou atribuindo a variável extrato com o saldo e o ultmo valor que depositei
-
-        else: # Condição para caso o cliente digite valores negativos para depósito
-            print("Você digitou valores negativos, tente novamente")
-   
-    elif opcao == "e":
-        
-        extrato =  f"""
+def extrato(saldo, /, *, extrato_saque, extrato_deposito):
+     print(f"""
 ------------ EXTRATO -----------
 SALDO = R$ {saldo:.2f}
 
@@ -64,14 +57,39 @@ SALDO = R$ {saldo:.2f}
 --------------------------------
 {extrato_deposito} 
 --------------------------------    
-            """
-        print(extrato)
+            """)
+     
+while True: # Estrutura de repetição while = True. Com o objetivo de ficar sempre em Loop3
+    opcao = input(menu) # Exibindo a mensagem do menu e pegando a opção pelo input, atribuindo na variável opcao
 
+    if opcao == "s": # Condição para a opção de saque
+        saque = float(input("Informe o saque: R$ ")) # Após a checagem, pede o informe do saque
+        saldo, extrato_saque, limite_saque = sacar(saque=saque, saldo=saldo, limite_saque=limite_saque, VALOR_LIMITE_DE_SAQUE= VALOR_LIMITE_DE_SAQUE, extrato_saque= extrato_saque)
+
+
+    elif opcao == "d": # Condição para a opção de depósito que é 1 
+        depositar = float(input("Informe o depósito: R$ ")) # Atribuindo o valor de depósito na variável depositar
+
+        saldo, extrato_deposito = deposito(saldo, depositar, extrato_deposito)
+   
+    elif opcao == "e":
+         extrato(saldo, extrato_saque=extrato_saque, extrato_deposito=extrato_deposito)
+         
     elif opcao == "l": # Essa condição checa se a opção 3 foi escolhida e encerrar o loop com break   
         print("Saindo do sistema...") # Mensagem de logout do sistema
+        print("Obrigado por nós visitar!")
+        menssagem_saida = """
+
+        Sempre conte com nossos serviços! Estamos a sua espera. -.-
+
+                                (͡° ͜ʖ ͡°)
+
+        """
+        print(menssagem_saida)
         break # Cortando o loop com o break
     
     else: 
-        print("Opção invalida, tente novamente")
+        print("Opção inválida, tente novamente")
+              
+            
     
-
