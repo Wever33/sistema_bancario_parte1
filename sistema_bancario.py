@@ -21,7 +21,7 @@ data_nascimento = ""
 cpf = 0
 endereco = ""
 usuarios = ""
-cpf_verificar = []
+lista_de_cpfs_cadastrados = []
 
 def deposito(saldo, depositar, extrato_deposito, /):
     if depositar > 0: # Condição para o depósito ser um número maior que 0
@@ -74,7 +74,7 @@ def cadastro_usuario(*, nome, data_nascimento, cpf, endereco, usuarios):
 
         usuarios += f"""
         -----------------------------------------
-                    CADASTRO DE {nome.upper()}
+                CADASTRO DE {nome.upper()}
 
         Nome: {nome}
         Data de Nascimento: {data_nascimento}
@@ -116,14 +116,18 @@ while True: # Estrutura de repetição while = True. Com o objetivo de ficar sem
         break # Cortando o loop com o break
     
     elif opcao == "u": 
-        #if cpf in cpf_verificar:
             cpf = int(input("CPF (Apenas números, por favor): "))
-            usuarios, cpf = cadastro_usuario(nome=nome, data_nascimento=data_nascimento, cpf=cpf, endereco=endereco, usuarios=usuarios)
-            cpf_verificar.append(cpf)
-        #else:
-             #print("CPF já cadastrado")
+
+            if cpf not in lista_de_cpfs_cadastrados:
+                usuarios, cpf = cadastro_usuario(nome=nome, data_nascimento=data_nascimento, cpf=cpf, endereco=endereco, usuarios=usuarios)
+                lista_de_cpfs_cadastrados.append(cpf)
+
+            else:
+             print(f"Aviso: Seu CPF já está cadastrado em nosso sistema")
+
     elif opcao == "m":
          print(usuarios)
+
     else: 
         print("Opção inválida, tente novamente")
               
