@@ -21,7 +21,7 @@ data_nascimento = ""
 cpf = 0
 endereco = ""
 usuarios = ""
-cpf_verificar = 0
+cpf_verificar = []
 
 def deposito(saldo, depositar, extrato_deposito, /):
     if depositar > 0: # Condição para o depósito ser um número maior que 0
@@ -68,7 +68,6 @@ SALDO = R$ {saldo:.2f}
             """)     
 
 def cadastro_usuario(*, nome, data_nascimento, cpf, endereco, usuarios):
-        cpf = int(input("CPF (Apenas números, por favor): "))
         nome = input("Digite seu nome: ")
         data_nascimento = input("Data nascimento: ")
         endereco = input("Endereço (Logradoro - bairro - cidade/sigla - estado ): ")
@@ -84,8 +83,7 @@ def cadastro_usuario(*, nome, data_nascimento, cpf, endereco, usuarios):
         -----------------------------------------
 
         """
-        return usuarios
-    
+        return usuarios, cpf
      
      
 while True: # Estrutura de repetição while = True. Com o objetivo de ficar sempre em Loop3
@@ -118,17 +116,14 @@ while True: # Estrutura de repetição while = True. Com o objetivo de ficar sem
         break # Cortando o loop com o break
     
     elif opcao == "u": 
-        print("Criação de usuário\n")
-        cpf_verificar = int(input("CPF (Apenas números, por favor): "))
-        if cpf_verificar not in cpf:
-            usuarios = cadastro_usuario(nome=nome, data_nascimento=data_nascimento, cpf=cpf, endereco=endereco, usuarios=usuarios)
-        else:
-             print("CPF já cadastrado") 
-        
-    
+        #if cpf in cpf_verificar:
+            cpf = int(input("CPF (Apenas números, por favor): "))
+            usuarios, cpf = cadastro_usuario(nome=nome, data_nascimento=data_nascimento, cpf=cpf, endereco=endereco, usuarios=usuarios)
+            cpf_verificar.append(cpf)
+        #else:
+             #print("CPF já cadastrado")
     elif opcao == "m":
          print(usuarios)
-
     else: 
         print("Opção inválida, tente novamente")
               
