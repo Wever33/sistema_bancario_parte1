@@ -2,7 +2,9 @@ menu = """
         [s] - SAQUE                                                  
         [d] - DEPÓSITO                                               
         [e] - EXTRATO                                                
-        [l] - SAIR                                                                               
+        [l] - SAIR
+        [u] - CRIAR USUÀRIO
+        [m] - MOSTRAR USUÁRIOS                                                                              
     """
 # Acima, contém a variável contendo a menssagem inicial 
 
@@ -14,6 +16,12 @@ limite_saque = 0 # Limite de saque é 3, o limite de saque é R$ 500,00
 VALOR_LIMITE_DE_SAQUE = float(500)
 extrato_saque = "" # Variável para receber os saques 
 extrato_deposito = "" # Variável para receber os depósitos
+nome = ""
+data_nascimento = ""
+cpf = 0
+endereco = ""
+usuarios = ""
+cpf_verificar = 0
 
 def deposito(saldo, depositar, extrato_deposito, /):
     if depositar > 0: # Condição para o depósito ser um número maior que 0
@@ -57,7 +65,28 @@ SALDO = R$ {saldo:.2f}
 --------------------------------
 {extrato_deposito} 
 --------------------------------    
-            """)
+            """)     
+
+def cadastro_usuario(*, nome, data_nascimento, cpf, endereco, usuarios):
+        cpf = int(input("CPF (Apenas números, por favor): "))
+        nome = input("Digite seu nome: ")
+        data_nascimento = input("Data nascimento: ")
+        endereco = input("Endereço (Logradoro - bairro - cidade/sigla - estado ): ")
+
+        usuarios += f"""
+        -----------------------------------------
+                    CADASTRO DE {nome.upper()}
+
+        Nome: {nome}
+        Data de Nascimento: {data_nascimento}
+        CPF: {cpf}
+        Endereço: {endereco}
+        -----------------------------------------
+
+        """
+        return usuarios
+    
+     
      
 while True: # Estrutura de repetição while = True. Com o objetivo de ficar sempre em Loop3
     opcao = input(menu) # Exibindo a mensagem do menu e pegando a opção pelo input, atribuindo na variável opcao
@@ -88,6 +117,18 @@ while True: # Estrutura de repetição while = True. Com o objetivo de ficar sem
         print(menssagem_saida)
         break # Cortando o loop com o break
     
+    elif opcao == "u": 
+        print("Criação de usuário\n")
+        cpf_verificar = int(input("CPF (Apenas números, por favor): "))
+        if cpf_verificar not in cpf:
+            usuarios = cadastro_usuario(nome=nome, data_nascimento=data_nascimento, cpf=cpf, endereco=endereco, usuarios=usuarios)
+        else:
+             print("CPF já cadastrado") 
+        
+    
+    elif opcao == "m":
+         print(usuarios)
+
     else: 
         print("Opção inválida, tente novamente")
               
