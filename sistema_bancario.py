@@ -3,8 +3,9 @@ menu = """
         [d] - DEPÓSITO                                               
         [e] - EXTRATO                                                
         [l] - SAIR
-        [u] - CRIAR USUÀRIO
-        [m] - MOSTRAR USUÁRIOS                                                                              
+        [u] - CRIAR CONTA
+        [m] - MOSTRAR CONTAS
+
     """
 # Acima, contém a variável contendo a menssagem inicial 
 
@@ -22,6 +23,8 @@ cpf = 0
 endereco = ""
 usuarios = ""
 lista_de_cpfs_cadastrados = []
+numero_da_conta = 0
+NUMERO_DA_AGENCIA = "0001"
 
 def deposito(saldo, depositar, extrato_deposito, /):
     if depositar > 0: # Condição para o depósito ser um número maior que 0
@@ -59,7 +62,7 @@ def sacar(*, saque, saldo, limite_saque, VALOR_LIMITE_DE_SAQUE, extrato_saque):
 def extrato(saldo, /, *, extrato_saque, extrato_deposito):
      print(f"""
 ------------ EXTRATO -----------
-SALDO = R$ {saldo:.2f}
+SALDO: R$ {saldo:.2f}
 
 {extrato_saque}
 --------------------------------
@@ -67,23 +70,29 @@ SALDO = R$ {saldo:.2f}
 --------------------------------    
             """)     
 
-def cadastro_usuario(*, nome, data_nascimento, cpf, endereco, usuarios):
+def criar_conta(numero_da_conta, NUMERO_DA_AGENCIA, /, *, nome, data_nascimento, cpf, endereco, usuarios):
         nome = input("Digite seu nome: ")
         data_nascimento = input("Data nascimento: ")
         endereco = input("Endereço (Logradoro - bairro - cidade/sigla - estado ): ")
 
         usuarios += f"""
-        -----------------------------------------
-                CADASTRO DE {nome.upper()}
+        ------------INFORMAÇÕES PESSOAIS--------------
 
-        Nome: {nome}
+        Nome: {nome.title()}
         Data de Nascimento: {data_nascimento}
         CPF: {cpf}
-        Endereço: {endereco}
-        -----------------------------------------
+        Endereço: {endereco.upper()}
+
+        ------------INFORMAÇÕES CONTA------------------
+                
+        NÚMERO DA CONTA: {numero_da_conta}     
+        AGÊNCIA: {NUMERO_DA_AGENCIA}
+
+        -----------------------------------------------
 
         """
         return usuarios, cpf
+        
      
      
 while True: # Estrutura de repetição while = True. Com o objetivo de ficar sempre em Loop3
@@ -119,7 +128,8 @@ while True: # Estrutura de repetição while = True. Com o objetivo de ficar sem
             cpf = int(input("CPF (Apenas números, por favor): "))
 
             if cpf not in lista_de_cpfs_cadastrados:
-                usuarios, cpf = cadastro_usuario(nome=nome, data_nascimento=data_nascimento, cpf=cpf, endereco=endereco, usuarios=usuarios)
+                usuarios, cpf = criar_conta(numero_da_conta, NUMERO_DA_AGENCIA, nome=nome, data_nascimento=data_nascimento, cpf=cpf, endereco=endereco, usuarios=usuarios)
+                numero_da_conta += 1
                 lista_de_cpfs_cadastrados.append(cpf)
 
             else:
